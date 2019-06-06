@@ -18,6 +18,9 @@ After spinning up the instnaces, add the ec2 instances as ansible remote host an
 
 
 
+====================================================================================================================================
+
+
 
 1. What did you choose to automate the provisioning and bootstrapping of the instance? Why?
    Ans: Terraform with Ansible. Terraform is normally used to provision resouces with script and it's platform independent. To automate 
