@@ -1,0 +1,55 @@
+---
+
+- hosts: elasticsearch_master_node1
+  become: ture
+  become_method: sudo
+  roles:
+    - { role: elasticsearch, es_instance_name: "node1", es_config: { 
+              cluster.name: dev,
+              http.port: 9200,
+              network.host: 0.0.0.0,
+              transport.tcp.port: 9300,
+              node.data: false,
+              node.master: true,
+              node.name: node1 } }
+  vars:
+    es_major_version: "6.x"
+    es_version: "6.2.4"
+    es_heap_size: "512m"
+    es_cluster_name: "dev"
+
+- hosts: elasticsearch_data_node2
+  become: ture
+  become_method: sudo
+  roles:
+    - { role: elasticsearch, es_instance_name: "node2", es_config: {
+            cluster.name: dev,
+            http.port: 9200,
+            network.host: 0.0.0.0,
+            transport.tcp.port: 9300,
+            node.data: true,
+            node.master: false,
+            node.name: node2 } }
+  vars:
+    es_major_version: "6.x"
+    es_version: "6.2.4"
+    es_heap_size: "512m"
+    es_cluster_name: "dev"
+
+- hosts: elasticsearch_data_node3
+  become: ture
+  become_method: sudo
+  roles:
+    - { role: elasticsearch, es_instance_name: "node3", es_config: {
+            cluster.name: dev,
+            http.port: 9200,
+            network.host: 0.0.0.0,
+            transport.tcp.port: 9300,
+            node.data: true,
+            node.master: false,
+            node.name: node3 } }
+  vars:
+    es_major_version: "6.x"
+    es_version: "6.2.4"
+    es_heap_size: "512m"
+    es_cluster_name: "dev"

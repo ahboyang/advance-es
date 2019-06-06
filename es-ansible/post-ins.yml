@@ -1,0 +1,26 @@
+- hosts: elasticsearch_master_nodes
+  become: true
+  become_method: sudo  
+  tasks:
+  - name: create dir
+    command: mkdir /etc/elasticsearch/certs 
+  - name: stop service
+    command: service elasticsearch stop
+  - name: create user
+    command: bash /usr/share/elasticsearch/bin/x-pack/users useradd admin -p P@ssw0rd -r superuser
+  - name: copy ssl cert
+    copy: 
+        src: /home/ansadmin1/es-ansible/elastic-certificates.p12
+        dest: /etc/elasticsearch/certs/elastic-certificates.p12
+        owner: root
+        group: root
+  - name: change mode
+    command: chmod 777 /etc/elasticsearch/certs/elastic-certificates.p12
+  - name: update es config
+    copy: 
+        src: /home/ansadmin1/es-ansible/node2/elasticsearch.yml
+        dest: /etc/elasticsearch/elasticsearch.yml
+        owner: root
+        group: root
+  - name: start service
+    command: service elasticsearch start
